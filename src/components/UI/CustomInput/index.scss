@@ -1,0 +1,31 @@
+.custom-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 30px;
+
+  &__input {
+    height: 100%;
+  }
+
+  &__btn {
+    height: 60%;
+
+    &:active {
+      transform: scale(1.2);
+    }
+  }
+
+  &.active {
+    .custom-input {
+      &__btn {
+        transform: scale(1.2);
+      }
+    }
+
+  }
+
+  &__img {
+    height: 100%;
+  }
+}
