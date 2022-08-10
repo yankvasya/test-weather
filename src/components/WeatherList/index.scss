@@ -1,0 +1,25 @@
+.weather-list {
+  max-width: 480px;
+  padding: 10px 40px;
+
+  .open-settings {
+    display: flex;
+    justify-content: flex-end;
+
+    &__img {
+      width: 16px;
+      transition: transform .5s;
+
+      &:hover {
+        transform: rotate(180deg);
+        transition: transform 1s;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 65px;
+  }
+}
