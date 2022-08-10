@@ -1,3 +1,6 @@
 @import 'reseter.css/src/scss/minireseter';
 @import './reset.scss';
 
+#app {
+  max-width: 480px;
+}
