@@ -1,0 +1,37 @@
+.city-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 5px;
+  background: #d0d0d0;
+
+  &__drag {
+    display: flex;
+
+    &-img {
+      width: 20px;
+
+      &:active {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &__title {
+    white-space: nowrap;
+    margin-left: 10px;
+    width: 100%;
+  }
+
+ &__delete {
+   display: flex;
+   justify-content: flex-end;
+
+   &-img {
+     width: 25px;
+
+     &:active {
+       transform: scale(1.2);
+     }
+   }
+ }
+}
