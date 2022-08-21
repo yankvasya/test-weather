@@ -1,19 +1,20 @@
 <template>
   <div class="weather-item">
     <div class="weather">
-      <h3 class="weather__title">London, UK</h3>
+      <h3 class="weather__title">{{ city.name }}</h3>
 
       <div class="weather__info">
         <img
           class="weather__img"
-          src="../../assets/images/weathers/cloudy.png"
-          alt="cloudy"
+          :src="getWeatherIcon"
+          :alt="city.weather[0].main"
         />
-        <h4 class="weather__degree">7&deg;C</h4>
+        <h4 class="weather__degree">{{ city.main.temp }}&deg;C</h4>
       </div>
 
       <p class="weather__description">
-        Feels like -3&deg;C. Broken clouds. Light breeze
+        Feels like {{ city.main.feels_like }}&deg;C.
+        {{ city.weather[0].description }}
       </p>
 
       <ul class="weather__details">
@@ -23,7 +24,7 @@
             src="../../assets/icons/weather/sse.svg"
             alt="SSE"
           />
-          <h5 class="detail__text">3.0m/s SSE</h5>
+          <h5 class="detail__text">{{ city.wind.speed }}m/s SSE</h5>
         </li>
         <li class="weather__detail detail">
           <img
@@ -31,25 +32,43 @@
             src="../../assets/icons/weather/hpa.svg"
             alt="hPa"
           />
-          <h5 class="detail__text">1021hPa</h5>
+          <h5 class="detail__text">{{ city.main.pressure }}hPa</h5>
         </li>
       </ul>
 
       <ul class="weather__statistics">
-        <li class="weather__humidity">Humidity: 97%</li>
-        <li class="weather__dew-point">Dew point: 0&deg;C</li>
-        <li class="weather__visibility">Visibility: 10.0km</li>
+        <li class="weather__humidity">Humidity: {{ city.main.humidity }}%</li>
+        <li class="weather__dew-point">
+          Dew point: {{ city.main.temp_min }}&deg;C
+        </li>
+        <li class="weather__visibility">Visibility: {{ city.visibility }}km</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { ICityWeather } from "@/types/types";
 
 export default defineComponent({
   name: "WeatherItem",
-  components: {},
+  props: {
+    city: {
+      type: Object as PropType<ICityWeather>,
+    },
+  },
+  computed: {
+    getWeatherIcon(props: { city: ICityWeather }) {
+      const images = require.context(
+        "../../assets/images/weathers/",
+        false,
+        /\.png$/
+      );
+
+      return images("./" + props.city.weather[0].main.toLowerCase() + ".png");
+    },
+  },
 });
 </script>
 
