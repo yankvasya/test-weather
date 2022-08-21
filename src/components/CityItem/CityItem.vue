@@ -25,6 +25,7 @@ import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "CityItem",
+  emits: ["delete:item"],
   props: {
     name: {
       type: String as PropType<string>,
