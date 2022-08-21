@@ -37,7 +37,7 @@ export default defineComponent({
   methods: {
     async citiesWeather(): Promise<ICityWeather[]> {
       let apiKey: string;
-      apiKey = "209c67b06f00d97d5d8416a54e002c9b";
+      apiKey = "f0747dfbe799b65db66d4d370bc1db29";
       const weathers: ICityWeather[] = [];
       for await (const city of this.allCities()) {
         const response = await fetch(
@@ -48,7 +48,8 @@ export default defineComponent({
         if (data.cod === StatusCode.OK) {
           weathers.push(data);
         } else {
-          console.error(data.message);
+          console.error(`CITY: ${city}`, data.message);
+          await this.deleteCity(city);
         }
       }
 
@@ -57,7 +58,7 @@ export default defineComponent({
     allCities() {
       return JSON.parse(localStorage.getItem("weather-cities") || "[]"); // ENUM
     },
-    async saveCity(name: string) {
+    async saveCity(name: string): Promise<void> {
       localStorage.setItem(
         "weather-cities",
         JSON.stringify([
@@ -68,7 +69,7 @@ export default defineComponent({
 
       await this.updateWeathers();
     },
-    async deleteCity(name: string) {
+    async deleteCity(name: string): Promise<void> {
       localStorage.setItem(
         "weather-cities",
         JSON.stringify([
@@ -78,14 +79,14 @@ export default defineComponent({
 
       await this.updateWeathers();
     },
-    toggleSettingsDisplay(value: boolean) {
+    toggleSettingsDisplay(value: boolean): void {
       this.isSettingsOpened = value;
     },
-    async updateWeathers() {
+    async updateWeathers(): Promise<void> {
       this.weathers = await this.citiesWeather();
     },
   },
-  async mounted() {
+  async mounted(): Promise<void> {
     await this.updateWeathers();
   },
 });
