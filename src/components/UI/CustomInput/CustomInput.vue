@@ -7,7 +7,7 @@
       type="text"
       v-model="value"
     />
-    <a class="custom-input__btn" href="#">
+    <a @click.prevent="updateValue" class="custom-input__btn" href="#">
       <img
         class="custom-input__img"
         src="../../../assets/icons/utils/enter.svg"
@@ -22,6 +22,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "CustomInput",
+  emits: ["updated:value"],
   data() {
     return {
       value: "",
@@ -34,7 +35,11 @@ export default defineComponent({
     },
     upEnterInput() {
       this.active = false;
-      this.$emit("updated:value");
+      this.updateValue();
+    },
+    updateValue() {
+      this.$emit("updated:value", this.value);
+      this.value = "";
     },
   },
 });
