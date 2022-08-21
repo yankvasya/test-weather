@@ -8,6 +8,13 @@
 
     &__img {
       width: 20px;
+      transition: transform 1s;
+
+
+      &:hover {
+        transform: rotate(120deg) scale(1.2);
+        transition: transform 1s;
+      }
     }
   }
 
