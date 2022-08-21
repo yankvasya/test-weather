@@ -8,9 +8,9 @@
       />
     </a>
 
-    <h4 class="city-item__title">London, UK</h4>
+    <h4 class="city-item__title">{{ name }}</h4>
 
-    <a class="city-item__delete" href="#">
+    <a @click.prevent="deleteCity" class="city-item__delete" href="#">
       <img
         class="city-item__delete-img"
         src="../../assets/icons/utils/trash.svg"
@@ -21,10 +21,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
   name: "CityItem",
+  props: {
+    name: {
+      type: String as PropType<string>,
+    },
+  },
+  methods: {
+    deleteCity() {
+      this.$emit("delete:item", this.name);
+    },
+  },
 });
 </script>
 
