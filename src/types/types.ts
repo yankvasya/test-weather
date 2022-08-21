@@ -32,7 +32,7 @@ interface IWeather {
 }
 
 export interface ICityWeather {
-  name?: string;
+  name: string;
   weather: IWeather[];
   visibility: number;
   main: IMain;
