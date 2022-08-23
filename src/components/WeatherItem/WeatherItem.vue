@@ -60,13 +60,11 @@ export default defineComponent({
   },
   computed: {
     getWeatherIcon(props: { city: ICityWeather }) {
-      const images = require.context(
-        "../../assets/images/weathers/",
-        false,
-        /\.png$/
+      const path = `../../assets/images/weathers/${props.city.weather[0].main.toLowerCase()}.png`;
+      const modules = import.meta.globEager(
+        "../../assets/images/weathers/*.png"
       );
-
-      return images("./" + props.city.weather[0].main.toLowerCase() + ".png");
+      return modules[path].default;
     },
   },
 });
