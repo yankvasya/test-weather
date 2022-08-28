@@ -1,6 +1,7 @@
 export enum StatusCode {
   OK = 200,
-  ERROR = 404,
+  CITY_NOT_FOUND = 404,
+  INVALID_KEY = 401,
 }
 
 export enum WeatherValues {
