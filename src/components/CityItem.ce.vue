@@ -3,7 +3,7 @@
     <a class="city-item__drag" href="#">
       <img
         class="city-item__drag-img"
-        src="../../assets/icons/utils/list.svg"
+        src="../assets/icons/utils/list.svg"
         alt="drag-n-drop"
       />
     </a>
@@ -13,7 +13,7 @@
     <a @click.prevent="deleteCity" class="city-item__delete" href="#">
       <img
         class="city-item__delete-img"
-        src="../../assets/icons/utils/trash.svg"
+        src="../assets/icons/utils/trash.svg"
         alt="drag-n-drop"
       />
     </a>
@@ -39,4 +39,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped src="./index.scss" />
+<style lang="scss" />

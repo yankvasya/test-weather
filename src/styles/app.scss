@@ -1,6 +1,12 @@
+// base styles
 @import 'reseter.css/src/scss/minireseter';
 @import './reset';
 
-#app {
-  max-width: 480px;
-}
+// components/UI
+@import './components/UI/CustomInput';
+
+// components
+@import './components/CityItem';
+@import './components/CitySettings';
+@import './components/WeatherItem';
+@import './components/WeatherList';

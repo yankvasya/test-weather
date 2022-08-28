@@ -21,7 +21,7 @@
         <li class="weather__detail detail">
           <img
             class="detail__image"
-            src="../../assets/icons/weather/sse.svg"
+            src="../assets/icons/weather/sse.svg"
             alt="SSE"
           />
           <h5 class="detail__text">{{ city.wind.speed }}m/s SSE</h5>
@@ -29,7 +29,7 @@
         <li class="weather__detail detail">
           <img
             class="detail__image"
-            src="../../assets/icons/weather/hpa.svg"
+            src="../assets/icons/weather/hpa.svg"
             alt="hPa"
           />
           <h5 class="detail__text">{{ city.main.pressure }}hPa</h5>
@@ -62,7 +62,7 @@ export default defineComponent({
   computed: {
     getWeatherIcon(props: { city: ICityWeather }) {
       return new URL(
-        `../../assets/images/weathers/${props.city.weather[0].main.toLowerCase()}.png`,
+        `../assets/images/weathers/${props.city.weather[0].main.toLowerCase()}.png`,
         import.meta.url
       ).href;
     },
@@ -70,4 +70,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped src="./index.scss" />
+<style lang="scss" />

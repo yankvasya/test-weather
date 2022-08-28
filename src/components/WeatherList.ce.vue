@@ -7,7 +7,7 @@
     >
       <img
         class="open-settings__img"
-        src="../../assets/icons/utils/settings.svg"
+        src="../assets/icons/utils/settings.svg"
         alt="settings"
       />
     </a>
@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import WeatherItem from "@/components/WeatherItem/WeatherItem.vue";
+import WeatherItem from "@/components/WeatherItem.ce.vue";
 import { ICityWeather } from "@/types/types";
 
 export default defineComponent({
@@ -46,4 +46,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped src="./index.scss" />
+<style lang="scss" />

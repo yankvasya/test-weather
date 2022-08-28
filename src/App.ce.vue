@@ -1,27 +1,35 @@
 <template>
-  <WeatherList
-    v-if="!isSettingsOpened"
-    :cities="weathers"
-    @update:openSettings="toggleSettingsDisplay"
-  />
+  <div id="app" :style="{ width: width }">
+    <WeatherList
+      v-if="!isSettingsOpened"
+      :cities="weathers"
+      @update:openSettings="toggleSettingsDisplay"
+    />
 
-  <CitySettings
-    v-else
-    :cities="weathers"
-    @updated:addCity="saveCity"
-    @updated:deleteCity="deleteCity"
-    @updated:openSettings="toggleSettingsDisplay"
-  />
+    <CitySettings
+      v-else
+      :cities="weathers"
+      @updated:addCity="saveCity"
+      @updated:deleteCity="deleteCity"
+      @updated:openSettings="toggleSettingsDisplay"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import WeatherList from "@/components/WeatherList/WeatherList.vue";
-import CitySettings from "@/components/CitySettings/CitySettings.vue";
+import WeatherList from "@/components/WeatherList.ce.vue";
+import CitySettings from "@/components/CitySettings.ce.vue";
 import { ICityWeather, StatusCode } from "@/types/types";
 
 export default defineComponent({
   name: "App",
+  props: {
+    width: {
+      type: String,
+      default: "480px",
+    },
+  },
   components: {
     WeatherList,
     CitySettings,
@@ -55,7 +63,7 @@ export default defineComponent({
 
       return weathers;
     },
-    allCities() {
+    allCities(): string[] {
       return JSON.parse(localStorage.getItem("weather-cities") || "[]"); // ENUM
     },
     async saveCity(name: string): Promise<void> {

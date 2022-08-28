@@ -3,7 +3,15 @@ import path from "path";
 import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag === "weather-widget",
+        },
+      },
+    }),
+  ],
   server: {
     host: "localhost",
     port: 8080,

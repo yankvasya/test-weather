@@ -7,7 +7,7 @@
     >
       <img
         class="close-settings__img"
-        src="../../assets/icons/utils/close.svg"
+        src="../assets/icons/utils/close.svg"
         alt="close"
       />
     </a>
@@ -31,8 +31,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import CityItem from "@/components/CityItem/CityItem.vue";
-import CustomInput from "@/components/UI/CustomInput/CustomInput.vue";
+import CityItem from "@/components/CityItem.ce.vue";
+import CustomInput from "@/components/UI/CustomInput.ce.vue";
 import { ICityWeather } from "@/types/types";
 
 export default defineComponent({
@@ -64,4 +64,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" src="./index.scss" />
+<style lang="scss" />

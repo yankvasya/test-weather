@@ -10,7 +10,7 @@
     <a @click.prevent="updateValue" class="custom-input__btn" href="#">
       <img
         class="custom-input__img"
-        src="../../../assets/icons/utils/enter.svg"
+        src="../../assets/icons/utils/enter.svg"
         alt="Нажмите Enter"
       />
     </a>
@@ -45,4 +45,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped src="./index.scss" />
+<style lang="scss" />

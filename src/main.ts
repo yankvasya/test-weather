@@ -1,4 +1,8 @@
-import { createApp } from "vue";
-import App from "./App.vue";
+import { defineCustomElement } from "vue";
+import App from "./App.ce.vue";
 
-createApp(App).mount("#app");
+const weatherWidget = defineCustomElement(App);
+
+customElements.define("weather-widget", weatherWidget);
+
+document.body.appendChild(new weatherWidget());
