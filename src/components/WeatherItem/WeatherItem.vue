@@ -56,15 +56,14 @@ export default defineComponent({
   props: {
     city: {
       type: Object as PropType<ICityWeather>,
+      required: true,
     },
   },
   computed: {
     getWeatherIcon(props: { city: ICityWeather }) {
       const path = `../../assets/images/weathers/${props.city.weather[0].main.toLowerCase()}.png`;
-      const modules = import.meta.globEager(
-        "../../assets/images/weathers/*.png"
-      );
-      return modules[path].default;
+
+      return new URL(path, import.meta.url).href;
     },
   },
 });
