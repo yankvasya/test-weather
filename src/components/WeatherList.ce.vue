@@ -12,13 +12,15 @@
       />
     </a>
 
-    <ul v-if="cities.length" class="weather-list__list">
+    <h3 v-if="!allCities.length">No saved cities!</h3>
+
+    <h4 v-else-if="!cities.length">Loading weathers...</h4>
+
+    <ul v-else class="weather-list__list">
       <li v-for="city of cities" :key="city.name" class="weather-list__item">
         <weather-item :city="city" />
       </li>
     </ul>
-
-    <h3 v-else>Не сохраненных городов</h3>
   </div>
 </template>
 
@@ -34,12 +36,16 @@ export default defineComponent({
       type: Object as PropType<ICityWeather[]>,
       required: true,
     },
+    allCities: {
+      type: Array as PropType<string[]>,
+      required: true,
+    },
   },
   components: {
     WeatherItem,
   },
   methods: {
-    openSettings() {
+    openSettings(): void {
       this.$emit("update:openSettings", true);
     },
   },
