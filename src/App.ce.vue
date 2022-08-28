@@ -1,18 +1,22 @@
 <template>
   <div id="app" :style="{ width: width }">
-    <WeatherList
-      v-if="!isSettingsOpened"
-      :cities="weathers"
-      @update:openSettings="toggleSettingsDisplay"
-    />
+    <div v-if="isKeyInvalid">Api key is incorrect</div>
+    <template v-else>
+      <WeatherList
+        v-if="!isSettingsOpened"
+        :cities="weathers"
+        :allCities="allCities()"
+        @update:openSettings="toggleSettingsDisplay"
+      />
 
-    <CitySettings
-      v-else
-      :cities="weathers"
-      @updated:addCity="saveCity"
-      @updated:deleteCity="deleteCity"
-      @updated:openSettings="toggleSettingsDisplay"
-    />
+      <CitySettings
+        v-else
+        :cities="weathers"
+        @updated:addCity="saveCity"
+        @updated:deleteCity="deleteCity"
+        @updated:openSettings="toggleSettingsDisplay"
+      />
+    </template>
   </div>
 </template>
 
@@ -29,6 +33,10 @@ export default defineComponent({
       type: String,
       default: "480px",
     },
+    api: {
+      type: String,
+      default: "f0747dfbe799b65db66d4d370bc1db29",
+    },
   },
   components: {
     WeatherList,
@@ -40,24 +48,31 @@ export default defineComponent({
     return {
       weathers: weathers,
       isSettingsOpened: false,
+      isKeyInvalid: false,
     };
   },
   methods: {
     async citiesWeather(): Promise<ICityWeather[]> {
-      let apiKey: string;
-      apiKey = "f0747dfbe799b65db66d4d370bc1db29";
       const weathers: ICityWeather[] = [];
       for await (const city of this.allCities()) {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&units=metric&appid=${apiKey}`
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&units=metric&appid=${this.api}`
         );
         const data: ICityWeather = await response.json();
 
-        if (data.cod === StatusCode.OK) {
-          weathers.push(data);
-        } else {
-          console.error(`CITY: ${city}`, data.message);
-          await this.deleteCity(city);
+        switch (data.cod) {
+          case StatusCode.CITY_NOT_FOUND:
+            await this.deleteCity(city);
+            break;
+          case StatusCode.INVALID_KEY:
+            this.isKeyInvalid = true;
+            break;
+          case StatusCode.OK:
+            weathers.push(data);
+            break;
+          default:
+            console.error(data.message);
+            break;
         }
       }
 
