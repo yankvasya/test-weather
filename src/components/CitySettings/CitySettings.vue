@@ -40,6 +40,7 @@ export default defineComponent({
   props: {
     cities: {
       type: Array as PropType<ICityWeather[]>,
+      required: true,
     },
   },
   emits: ["updated:addCity", "updated:deleteCity", "updated:openSettings"],

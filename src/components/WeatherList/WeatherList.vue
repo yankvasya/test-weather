@@ -32,6 +32,7 @@ export default defineComponent({
   props: {
     cities: {
       type: Object as PropType<ICityWeather[]>,
+      required: true,
     },
   },
   components: {
