@@ -61,9 +61,10 @@ export default defineComponent({
   },
   computed: {
     getWeatherIcon(props: { city: ICityWeather }) {
-      const path = `../../assets/images/weathers/${props.city.weather[0].main.toLowerCase()}.png`;
-
-      return new URL(path, import.meta.url).href;
+      return new URL(
+        `../../assets/images/weathers/${props.city.weather[0].main.toLowerCase()}.png`,
+        import.meta.url
+      ).href;
     },
   },
 });
