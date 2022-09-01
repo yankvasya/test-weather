@@ -17,7 +17,11 @@
     <h4 v-else-if="!cities.length">Loading weathers...</h4>
 
     <ul v-else class="weather-list__list">
-      <li v-for="city of cities" :key="city.name" class="weather-list__item">
+      <li
+        v-for="city of sortedCities"
+        :key="city.name"
+        class="weather-list__item"
+      >
         <weather-item :city="city" />
       </li>
     </ul>
@@ -43,6 +47,14 @@ export default defineComponent({
   },
   components: {
     WeatherItem,
+  },
+  computed: {
+    sortedCities(): ICityWeather[] {
+      return [...this.cities].sort(
+        (a: ICityWeather, b: ICityWeather) =>
+          (a?.sortID || 0) - (b?.sortID || 0)
+      );
+    },
   },
   methods: {
     openSettings(): void {

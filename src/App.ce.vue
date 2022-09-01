@@ -15,6 +15,7 @@
         @updated:addCity="saveCity"
         @updated:deleteCity="deleteCity"
         @updated:openSettings="toggleSettingsDisplay"
+        @updated:changedSortID="updateCurrentSorting"
       />
     </template>
   </div>
@@ -55,6 +56,7 @@ export default defineComponent({
     async citiesWeather(): Promise<ICityWeather[]> {
       const weathers: ICityWeather[] = [];
       for await (const city of this.allCities()) {
+        const idx = this.allCities().indexOf(city);
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&units=metric&appid=${this.api}`
         );
@@ -68,7 +70,7 @@ export default defineComponent({
             this.isKeyInvalid = true;
             break;
           case StatusCode.OK:
-            weathers.push(data);
+            weathers.push({ sortID: idx + 1, ...data });
             break;
           default:
             console.error(data.message);
@@ -92,6 +94,12 @@ export default defineComponent({
 
       await this.updateWeathers();
     },
+    async saveAllCities(list: ICityWeather[]): Promise<void> {
+      localStorage.setItem(
+        "weather-cities",
+        JSON.stringify(list.map((city) => city.name))
+      );
+    },
     async deleteCity(name: string): Promise<void> {
       localStorage.setItem(
         "weather-cities",
@@ -107,6 +115,9 @@ export default defineComponent({
     },
     async updateWeathers(): Promise<void> {
       this.weathers = await this.citiesWeather();
+    },
+    updateCurrentSorting(changedList: ICityWeather[]): void {
+      this.saveAllCities(changedList);
     },
   },
   async mounted(): Promise<void> {

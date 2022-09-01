@@ -1,18 +1,24 @@
 .city-item {
   display: flex;
+  cursor: pointer;
   align-items: center;
   padding: 6px 5px;
   background: #d0d0d0;
+  //transform: scale(1);
+  //transition: transform .3s;
+
+
+  &.draggable {
+    background: rgba(234, 232, 232, 0.75);
+    //transform: scale(1.05);
+    //transition: transform .3s;
+  }
 
   &__drag {
     display: flex;
 
     &-img {
       width: 20px;
-
-      &:active {
-        transform: scale(1.2);
-      }
     }
   }
 

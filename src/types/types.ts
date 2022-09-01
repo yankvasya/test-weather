@@ -1,6 +1,6 @@
 export enum StatusCode {
   OK = 200,
-  CITY_NOT_FOUND = 404,
+  CITY_NOT_FOUND = "404",
   INVALID_KEY = 401,
 }
 
@@ -33,6 +33,7 @@ interface IWeather {
 }
 
 export interface ICityWeather {
+  sortID?: number;
   name: string;
   weather: IWeather[];
   visibility: number;
