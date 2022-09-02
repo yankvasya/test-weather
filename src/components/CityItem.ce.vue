@@ -43,6 +43,7 @@ export default defineComponent({
   props: {
     name: {
       type: String as PropType<string>,
+      required: true,
     },
     id: {
       type: Number as PropType<number>,
