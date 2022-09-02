@@ -53,14 +53,30 @@ export default defineComponent({
     };
   },
   methods: {
+    async fetchWeathersCity(city: string): Promise<ICityWeather> {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&units=metric&appid=${this.api}`
+      );
+      return await response.json();
+    },
+    async fetchWeathersCoords(lat: number, lon: number): Promise<ICityWeather> {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.api}`
+      );
+      return await response.json();
+    },
+
+    wasLocationRequested(): boolean {
+      return !!localStorage.getItem("wasLocationRequested");
+    },
+    changeLocationRequested(value: boolean): void {
+      localStorage.setItem("wasLocationRequested", JSON.stringify(value));
+    },
     async citiesWeather(): Promise<ICityWeather[]> {
       const weathers: ICityWeather[] = [];
       for await (const city of this.allCities()) {
         const idx = this.allCities().indexOf(city);
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&units=metric&appid=${this.api}`
-        );
-        const data: ICityWeather = await response.json();
+        const data = await this.fetchWeathersCity(city);
 
         switch (data.cod) {
           case StatusCode.CITY_NOT_FOUND:
@@ -119,9 +135,33 @@ export default defineComponent({
     updateCurrentSorting(changedList: ICityWeather[]): void {
       this.saveAllCities(changedList);
     },
+    async takeCurrentWeather(): Promise<void> {
+      const success = async (pos: GeolocationPosition): Promise<void> => {
+        console.log("success", pos.coords);
+        const data = await this.fetchWeathersCoords(
+          pos.coords.latitude,
+          pos.coords.longitude
+        );
+
+        await this.saveCity(data.name);
+        this.changeLocationRequested(true);
+      };
+      const error = (err: GeolocationPositionError) => {
+        console.log("error", err);
+        this.changeLocationRequested(true);
+      };
+
+      const options: PositionOptions = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    },
   },
   async mounted(): Promise<void> {
     await this.updateWeathers();
+    if (!this.wasLocationRequested()) await this.takeCurrentWeather();
   },
 });
 </script>
