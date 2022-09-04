@@ -17,7 +17,7 @@
       />
     </a>
 
-    <h4 class="city-item__title">{{ id }} {{ name }}</h4>
+    <h4 class="city-item__title">{{ name }}</h4>
 
     <a @click.prevent.stop="deleteCity" class="city-item__delete" href="#">
       <img
