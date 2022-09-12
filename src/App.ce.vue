@@ -27,6 +27,8 @@ import WeatherList from "@/components/WeatherList.ce.vue";
 import CitySettings from "@/components/CitySettings.ce.vue";
 import { ICityWeather, StatusCode } from "@/types/types";
 
+const weatherApiURL = "https://api.openweathermap.org/data/2.5/";
+
 export default defineComponent({
   name: "App",
   props: {
@@ -55,13 +57,13 @@ export default defineComponent({
   methods: {
     async fetchWeathersCity(city: string): Promise<ICityWeather> {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&units=metric&appid=${this.api}`
+        `${weatherApiURL}weather?q=${city}&lang=en&units=metric&appid=${this.api}`
       );
       return await response.json();
     },
     async fetchWeathersCoords(lat: number, lon: number): Promise<ICityWeather> {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.api}`
+        `${weatherApiURL}weather?lat=${lat}&lon=${lon}&appid=${this.api}`
       );
       return await response.json();
     },
