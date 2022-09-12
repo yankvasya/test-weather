@@ -29,16 +29,14 @@ import { ICityWeather, StatusCode } from "@/types/types";
 
 const weatherApiURL = "https://api.openweathermap.org/data/2.5/";
 
+const weatherAPI = import.meta.env.VITE_WEATHER_API || "";
+
 export default defineComponent({
   name: "App",
   props: {
     width: {
       type: String,
       default: "480px",
-    },
-    api: {
-      type: String,
-      default: "f0747dfbe799b65db66d4d370bc1db29",
     },
   },
   components: {
@@ -57,13 +55,13 @@ export default defineComponent({
   methods: {
     async fetchWeathersCity(city: string): Promise<ICityWeather> {
       const response = await fetch(
-        `${weatherApiURL}weather?q=${city}&lang=en&units=metric&appid=${this.api}`
+        `${weatherApiURL}weather?q=${city}&lang=en&units=metric&appid=${weatherAPI}`
       );
       return await response.json();
     },
     async fetchWeathersCoords(lat: number, lon: number): Promise<ICityWeather> {
       const response = await fetch(
-        `${weatherApiURL}weather?lat=${lat}&lon=${lon}&appid=${this.api}`
+        `${weatherApiURL}weather?lat=${lat}&lon=${lon}&appid=${weatherAPI}`
       );
       return await response.json();
     },
