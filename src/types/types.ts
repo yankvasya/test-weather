@@ -17,6 +17,7 @@ export enum WeatherValues {
 
 interface IWind {
   speed: number;
+  deg: number;
 }
 
 interface IMain {
